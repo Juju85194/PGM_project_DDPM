@@ -1,4 +1,4 @@
-```markdown
+```markdown```
 # DDPM Experimentation: Exploring Beta Scheduling in Denoising Diffusion Probabilistic Models
 
 This repository provides a structured framework for experimenting with Denoising Diffusion Probabilistic Models (DDPMs), with a particular focus on exploring the effects of different beta scheduling strategies. It is based on the code from the blog post "The Annotated Diffusion Model" and the paper "Denoising Diffusion Probabilistic Models" (Ho et al., 2020).
@@ -75,3 +75,4 @@ The main purpose of this repository is to facilitate experimentation with differ
     *   Train models using `train.py` with different schedules.
     *   Generate samples using `sample.py` from the trained models.
     *   Visually compare the generated samples and analyze the effects of different schedules on sample quality and the denoising process. You can also incorporate quantitative metrics for a more rigorous comparison.
+```
