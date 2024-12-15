@@ -12,7 +12,7 @@ ddpm-experiment/
 │   └── unet.py       
 ├── schedulers/      # Contains beta scheduling functions.
 │   └── scheduler.py
-├── datasets/        # Dataset loading and preprocessing.
+├── dataset/        # Dataset loading and preprocessing.
 │   └── dataset.py
 ├── trainers/        # Training loop and logic.
 │   └── trainer.py
