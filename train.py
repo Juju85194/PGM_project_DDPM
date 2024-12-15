@@ -2,10 +2,7 @@ import torch
 from models.unet import Unet
 from trainers.trainer import Trainer
 from config import Config
-from datasets.dataset import get_dataloader
-from torchvision.utils import save_image
-from schedulers.scheduler import compute_diffusion_vars
-import os
+from dataset.dataset import get_dataloader
 
 def train():
     # Set the device

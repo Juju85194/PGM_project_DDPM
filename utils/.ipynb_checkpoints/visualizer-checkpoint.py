@@ -3,6 +3,7 @@ import numpy as np
 from torchvision.transforms import Compose, ToTensor, Lambda, ToPILImage, CenterCrop, Resize
 import torch
 import matplotlib.animation as animation
+from pathlib import Path
 
 # Image plotting
 def plot(imgs, with_orig=False, row_title=None, **imshow_kwargs):
@@ -29,7 +30,8 @@ def plot(imgs, with_orig=False, row_title=None, **imshow_kwargs):
 
     plt.tight_layout()
 
-def save_gif(save_path, samples, image_size, channels):
+def save_gif(save_path, samples, image_size, channels, samples_folder):
+    save_path = samples_folder / save_path
     fig = plt.figure()
     ims = []
     for i in range(len(samples)):
@@ -42,11 +44,11 @@ def save_gif(save_path, samples, image_size, channels):
 
 def get_reverse_transform(image_size):
     reverse_transform = Compose([
-         Lambda(lambda t: (t + 1) / 2),
-         Lambda(lambda t: t.permute(1, 2, 0)), # CHW to HWC
-         Lambda(lambda t: t * 255.),
-         Lambda(lambda t: t.numpy().astype(np.uint8)),
-         ToPILImage(),
+            Lambda(lambda t: (t + 1) / 2),
+            Lambda(lambda t: t.permute(1, 2, 0)), # CHW to HWC
+            Lambda(lambda t: t * 255.),
+            Lambda(lambda t: t.numpy().astype(np.uint8)),
+            ToPILImage(),
     ])
     return reverse_transform
 

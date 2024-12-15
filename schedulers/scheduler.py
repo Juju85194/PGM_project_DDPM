@@ -1,14 +1,6 @@
 import torch
 import torch.nn.functional as F
 
-def exists(x):
-    return x is not None
-
-def default(val, d):
-    if exists(val):
-        return val
-    return d() if isfunction(d) else d
-
 def extract(a, t, x_shape):
     batch_size = t.shape[0]
     out = a.gather(-1, t.cpu())
@@ -42,11 +34,11 @@ def sigmoid_beta_schedule(timesteps):
     return torch.sigmoid(betas) * (beta_end - beta_start) + beta_start
 
 def compute_diffusion_vars(betas):
-  alphas = 1. - betas
-  alphas_cumprod = torch.cumprod(alphas, axis=0)
-  alphas_cumprod_prev = F.pad(alphas_cumprod[:-1], (1, 0), value=1.0)
-  sqrt_recip_alphas = torch.sqrt(1.0 / alphas)
-  sqrt_alphas_cumprod = torch.sqrt(alphas_cumprod)
-  sqrt_one_minus_alphas_cumprod = torch.sqrt(1. - alphas_cumprod)
-  posterior_variance = betas * (1. - alphas_cumprod_prev) / (1. - alphas_cumprod)
-  return alphas, alphas_cumprod, alphas_cumprod_prev, sqrt_recip_alphas, sqrt_alphas_cumprod, sqrt_one_minus_alphas_cumprod, posterior_variance
+    alphas = 1. - betas
+    alphas_cumprod = torch.cumprod(alphas, axis=0)
+    alphas_cumprod_prev = F.pad(alphas_cumprod[:-1], (1, 0), value=1.0)
+    sqrt_recip_alphas = torch.sqrt(1.0 / alphas)
+    sqrt_alphas_cumprod = torch.sqrt(alphas_cumprod)
+    sqrt_one_minus_alphas_cumprod = torch.sqrt(1. - alphas_cumprod)
+    posterior_variance = betas * (1. - alphas_cumprod_prev) / (1. - alphas_cumprod)
+    return alphas, alphas_cumprod, alphas_cumprod_prev, sqrt_recip_alphas, sqrt_alphas_cumprod, sqrt_one_minus_alphas_cumprod, posterior_variance

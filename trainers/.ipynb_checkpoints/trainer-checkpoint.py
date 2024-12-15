@@ -5,6 +5,8 @@ from tqdm.auto import tqdm
 from pathlib import Path
 from utils.visualizer import plot, save_gif
 from utils.helpers import num_to_groups
+from schedulers.scheduler import extract, compute_diffusion_vars
+from torchvision.utils import save_image
 import os
 
 def p_losses(denoise_model, x_start, t, alphas_cumprod, sqrt_one_minus_alphas_cumprod, noise=None, loss_type="l1"):
@@ -68,9 +70,12 @@ class Trainer:
               self.denoise_model.eval()
               milestone = step // self.config.save_and_sample_every
               batches = num_to_groups(self.config.save_n_samples, self.config.sample_batch_size)
-              all_images_list = list(map(lambda n: sample(self.denoise_model, batch_size=n, channels=self.config.channels), batches))
+              all_images_list = list(map(lambda n: sample(self.denoise_model, batch_size=n, channels=self.config.channels, timesteps=self.config.timesteps, betas=self.betas, sqrt_one_minus_alphas_cumprod=self.sqrt_one_minus_alphas_cumprod, sqrt_recip_alphas=self.sqrt_recip_alphas, posterior_variance=self.posterior_variance), batches))
               all_images = torch.cat(all_images_list, dim=0)
               all_images = (all_images + 1) * 0.5
               save_image(all_images, str(self.results_folder / f'sample-{milestone}.png'), nrow = 6)
-              samples = sample(self.denoise_model, batch_size=64, channels=self.config.channels)
+              samples = sample(self.denoise_model, batch_size=64, channels=self.config.channels, timesteps=self.config.timesteps, betas=self.betas, sqrt_one_minus_alphas_cumprod=self.sqrt_one_minus_alphas_cumprod, sqrt_recip_alphas=self.sqrt_recip_alphas, posterior_variance=self.posterior_variance)
               save_gif(f'diffusion-{milestone}.gif', samples, self.config.image_size, self.config.channels)
+
+        # Save the model
+        torch.save(self.denoise_model.state_dict(), os.path.join(self.results_folder, "model.pth"))

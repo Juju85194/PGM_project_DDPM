@@ -1,4 +1,5 @@
 from schedulers.scheduler import linear_beta_schedule, cosine_beta_schedule, quadratic_beta_schedule, sigmoid_beta_schedule
+from pathlib import Path
 
 class Config:
     def __init__(self):
@@ -11,8 +12,9 @@ class Config:
         self.log_every = 100
         self.save_and_sample_every = 1000
         self.results_folder = "./results"
+        self.samples_folder = Path(self.results_folder) / "samples"
         self.lr = 1e-3
-        self.timesteps = 300
+        self.timesteps = 200
         self.beta_schedule_fn = linear_beta_schedule
         self.save_n_samples = 4
         self.sample_batch_size = 64
