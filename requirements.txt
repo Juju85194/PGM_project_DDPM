@@ -1,5 +1,7 @@
 torch
 torchvision
+torchmetrics
+torchmetrics[image]
 einops
 datasets
 matplotlib
