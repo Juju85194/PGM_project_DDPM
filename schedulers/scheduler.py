@@ -45,6 +45,18 @@ def linear_variance_beta_schedule(timesteps):
     betas = 1 / (T - t + 1)
     return betas
 
+def softsign_beta_schedule(timesteps):
+    scale = 1000 / timesteps
+    beta_start = scale * 0.0001
+    beta_end = scale * 0.02
+    return (torch.softsign(betas) + 1)/2 * (beta_end - beta_start) + beta_start
+
+def tanh_beta_schedule(timesteps):
+    scale = 1000 / timesteps
+    beta_start = scale * 0.0001
+    beta_end = scale * 0.02
+    return (torch.tanh(betas)+1)/2 * (beta_end - beta_start) + beta_start
+
 def compute_diffusion_vars(betas):
     alphas = 1. - betas
     alphas_cumprod = torch.cumprod(alphas, axis=0)
