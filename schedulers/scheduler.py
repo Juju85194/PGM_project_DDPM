@@ -33,6 +33,15 @@ def sigmoid_beta_schedule(timesteps):
     betas = torch.linspace(-6, 6, timesteps)
     return torch.sigmoid(betas) * (beta_end - beta_start) + beta_start
 
+def linear_variance_beta_schedule(timesteps):
+    """
+    beta schedule with linear decrease in signal variance
+    """
+    T = timesteps
+    t = torch.arange(1, T + 1)
+    betas = 1 / (T - t + 1)
+    return betas
+
 def compute_diffusion_vars(betas):
     alphas = 1. - betas
     alphas_cumprod = torch.cumprod(alphas, axis=0)
