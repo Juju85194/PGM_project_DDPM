@@ -50,7 +50,7 @@ def softsign_beta_schedule(timesteps):
     beta_start = scale * 0.0001
     beta_end = scale * 0.02
     betas = torch.linspace(-6, 6, timesteps)
-    return (torch.softsign(betas) + 1)/2 * (beta_end - beta_start) + beta_start
+    return (betas/(1+torch.abs(betas)) + 1)/2 * (beta_end - beta_start) + beta_start
 
 def tanh_beta_schedule(timesteps):
     scale = 1000 / timesteps

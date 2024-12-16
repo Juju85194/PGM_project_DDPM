@@ -1,4 +1,4 @@
-from schedulers.scheduler import linear_beta_schedule, cosine_beta_schedule, quadratic_beta_schedule, sigmoid_beta_schedule, linear_variance_beta_schedule
+from schedulers.scheduler import linear_beta_schedule, cosine_beta_schedule, quadratic_beta_schedule, sigmoid_beta_schedule, linear_variance_beta_schedule, softsign_beta_schedule, tanh_beta_schedule
 from pathlib import Path
 
 class Config:
