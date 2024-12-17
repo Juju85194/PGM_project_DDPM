@@ -43,7 +43,8 @@ def linear_variance_beta_schedule(timesteps):
     T = timesteps
     t = torch.arange(1, T + 1)
     betas = 1 / (T - t + 1)
-    return betas
+    return torch.clip(betas, 0.0001,0.09999)
+
 
 def softsign_beta_schedule(timesteps):
     scale = 1000 / timesteps
